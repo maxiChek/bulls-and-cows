@@ -8,6 +8,8 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "CommonJS",
+    "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
     "target": "esnext",
     "types": ["jest", "node"],
     // For nodejs:
@@ -40,7 +42,6 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "moduleResolution": "node",
     "esModuleInterop": true
   }
 }
