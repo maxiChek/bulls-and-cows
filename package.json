@@ -4,7 +4,14 @@
   "description": "the game 'Bulls and Cows'",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "repository": {
     "type": "git",
@@ -22,6 +29,7 @@
     "@types/jest": "^30.0.0",
     "eslint": "^10.14.0",
     "jest": "^30.5.2",
+    "lint-staged": "^17.6.0",
     "prettier": "^3.9.10",
     "ts-jest": "^29.4.15",
     "typescript": "^5.9.3"
