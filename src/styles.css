@@ -1,0 +1,137 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.game-container {
+  background: #1e293b;
+  border-radius: 24px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+h1 {
+  text-align: center;
+  color: #818cf8;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+select,
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 0.4rem;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  color: #e2e8f0;
+  font-size: 1rem;
+}
+.primary-btn {
+  width: 100%;
+  padding: 0.9rem;
+  margin-top: 1.5rem;
+  background: #6366f1;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.primary-btn:hover {
+  background: #4f46e5;
+}
+.secondary-btn {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 1rem;
+  background: transparent;
+  border: 1px solid #475569;
+  border-radius: 12px;
+  color: #94a3b8;
+  cursor: pointer;
+}
+.info-box {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+.info-box span {
+  color: #818cf8;
+  font-weight: 700;
+}
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.input-row input {
+  flex: 1;
+}
+.input-row button {
+  width: auto;
+  margin-top: 0;
+  padding: 0.75rem 1.5rem;
+}
+.history {
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.history-entry {
+  padding: 0.5rem;
+  border-bottom: 1px solid #334155;
+  display: flex;
+  justify-content: space-between;
+}
+.history-entry .bulls {
+  color: #4ade80;
+}
+.history-entry .cows {
+  color: #facc15;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+th,
+td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #334155;
+}
+th {
+  color: #94a3b8;
+  font-weight: 500;
+}
