@@ -1,6 +1,5 @@
 import { evaluateGuess } from "./evaluateGuess";
 
-// Digits available for each base, as a plain record.
 const BASE_DIGITS: Record<string, string> = {
   bin: "01",
   oct: "01234567",
@@ -8,9 +7,12 @@ const BASE_DIGITS: Record<string, string> = {
   hex: "0123456789abcdef",
 };
 
-// Generate all ordered sequences of unique digits of the given length.
-// Uses recursion + backtracking: build the secret one digit at a time,
-// and when the prefix reaches the target length, yield it.
+// --- Memoization cache ---
+// Key: `${length}:${base}`. Value: the precomputed list of all valid secrets.
+// Because this list depends only on (length, base), a module-level cache
+// avoids regenerating it on every call to countPossibleSecrets.
+const allSecretsCache = new Map<string, string[]>();
+
 const generateAllSecrets = (
   length: number,
   base: string,
@@ -29,10 +31,20 @@ const generateAllSecrets = (
 
     used.add(digit);
     results.push(...generateAllSecrets(length, base, prefix + digit, used));
-    used.delete(digit); // backtrack: restore the state for the next branch
+    used.delete(digit);
   }
 
   return results;
+};
+
+const getAllSecrets = (length: number, base: string): string[] => {
+  const key = `${length}:${base}`;
+  const cached = allSecretsCache.get(key);
+  if (cached) return cached;
+
+  const generated = generateAllSecrets(length, base);
+  allSecretsCache.set(key, generated);
+  return generated;
 };
 
 export interface Move {
@@ -46,9 +58,8 @@ export const countPossibleSecrets = (
   base: string,
   moves: Move[],
 ): number => {
-  const allSecrets = generateAllSecrets(length, base);
+  const allSecrets = getAllSecrets(length, base);
 
-  // Keep only secrets that produce the same evaluation as every recorded move.
   const consistent = allSecrets.filter((secret) =>
     moves.every((move) => {
       const result = evaluateGuess(secret, move.guess);
