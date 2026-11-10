@@ -56,6 +56,7 @@ const startBtn = document.getElementById("start-btn")!;
 const attemptsCount = document.getElementById("attempts-count")!;
 const possibleCount = document.getElementById("possible-count")!;
 const timerDisplay = document.getElementById("timer")!;
+const gameInfo = document.querySelector(".game-info")!;
 const guessInput = document.getElementById("guess-input") as HTMLInputElement;
 const submitGuessBtn = document.getElementById(
   "submit-guess-btn",
@@ -187,6 +188,7 @@ const startGame = (): void => {
   guessInput.disabled = false;
   submitGuessBtn.disabled = false;
   timerDisplay.textContent = "00:00";
+  gameInfo.textContent = `${base} / Length: ${length}`;
 
   timerInterval = window.setInterval(() => {
     timerDisplay.textContent = formatTime(getElapsedSeconds());

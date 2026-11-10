@@ -18,7 +18,7 @@ body {
 .game-container {
   background: #1e293b;
   border-radius: 24px;
-  padding: 2rem;
+  padding: 1.5rem;
   width: 100%;
   max-width: 480px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
@@ -27,7 +27,7 @@ h1 {
   text-align: center;
   color: #818cf8;
   margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 }
 label {
   display: block;
@@ -59,17 +59,20 @@ input[type="text"] {
   transition: background 0.2s;
 }
 .primary-btn:hover {
-  background: #4f46e5;
+  background: #443fa8;
 }
 .secondary-btn {
   width: 100%;
   padding: 0.7rem;
   margin-top: 1rem;
-  background: transparent;
+  background: #0e5cca;
   border: 1px solid #475569;
   border-radius: 12px;
   color: #94a3b8;
   cursor: pointer;
+}
+.secondary-btn:hover {
+  background: #052655;
 }
 .info-box {
   background: #0f172a;
@@ -86,10 +89,20 @@ input[type="text"] {
 }
 .stats {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
   justify-content: space-between;
   margin-bottom: 1rem;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #94a3b8;
+}
+.stats span {
+  white-space: nowrap;
+}
+.game-info {
+  font-weight: 600;
+  color: #818cf8;
+  text-transform: capitalize;
 }
 .input-row {
   display: flex;
