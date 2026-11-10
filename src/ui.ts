@@ -54,6 +54,7 @@ const combinationsCount = document.getElementById("combinations-count")!;
 const startBtn = document.getElementById("start-btn")!;
 
 const attemptsCount = document.getElementById("attempts-count")!;
+const possibleCount = document.getElementById("possible-count")!;
 const timerDisplay = document.getElementById("timer")!;
 const guessInput = document.getElementById("guess-input") as HTMLInputElement;
 const submitGuessBtn = document.getElementById(
@@ -180,6 +181,7 @@ const startGame = (): void => {
   recordsScreen.hidden = true;
 
   attemptsCount.textContent = "0";
+  possibleCount.textContent = String(countPossibleSecrets(length, base, []));
   historyList.innerHTML = "";
   guessInput.value = "";
   guessInput.disabled = false;
@@ -223,6 +225,9 @@ const submitGuess = (): void => {
   historyList.prepend(entry);
 
   attemptsCount.textContent = String(newAttempts.length);
+  possibleCount.textContent = String(
+    countPossibleSecrets(state.length, state.base, newAttempts),
+  );
   guessInput.value = "";
 
   if (isWin) {

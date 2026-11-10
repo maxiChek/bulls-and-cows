@@ -7,65 +7,61 @@ const BASE_DIGITS: Record<string, string> = {
   hex: "0123456789abcdef",
 };
 
-// --- Memoization cache ---
-// Key: `${length}:${base}`. Value: the precomputed list of all valid secrets.
-// Because this list depends only on (length, base), a module-level cache
-// avoids regenerating it on every call to countPossibleSecrets.
-const allSecretsCache = new Map<string, string[]>();
-
-const generateAllSecrets = (
-  length: number,
-  base: string,
-  prefix = "",
-  used = new Set<string>(),
-): string[] => {
-  if (prefix.length === length) {
-    return [prefix];
-  }
-
-  const pool = (BASE_DIGITS[base] ?? "").split("");
-  const results: string[] = [];
-
-  for (const digit of pool) {
-    if (used.has(digit)) continue;
-
-    used.add(digit);
-    results.push(...generateAllSecrets(length, base, prefix + digit, used));
-    used.delete(digit);
-  }
-
-  return results;
-};
-
-const getAllSecrets = (length: number, base: string): string[] => {
-  const key = `${length}:${base}`;
-  const cached = allSecretsCache.get(key);
-  if (cached) return cached;
-
-  const generated = generateAllSecrets(length, base);
-  allSecretsCache.set(key, generated);
-  return generated;
-};
-
 export interface Move {
   guess: string;
   bulls: number;
   cows: number;
 }
 
+// Memoization cache
+const memoCache = new Map<string, number>();
+
 export const countPossibleSecrets = (
   length: number,
   base: string,
   moves: Move[],
 ): number => {
-  const allSecrets = getAllSecrets(length, base);
+  const key = JSON.stringify({ length, base, moves });
+  const cached = memoCache.get(key);
+  if (cached !== undefined) return cached;
 
-  const consistent = allSecrets.filter((secret) =>
-    moves.every((move) => {
-      const result = evaluateGuess(secret, move.guess);
-      return result.bulls === move.bulls && result.cows === move.cows;
-    }),
-  );
+  const pool = (BASE_DIGITS[base] ?? "").split("");
 
-  return consistent.length;
+  // Optimization: if there are no moves, calculate using math (permutations P(n, k))
+  // instead of iterating over millions of combinations.
+  if (moves.length === 0) {
+    let n = pool.length;
+    let result = 1;
+    for (let i = 0; i < length; i++) {
+      result *= n--;
+    }
+    memoCache.set(key, result);
+    return result;
+  }
+
+  let count = 0;
+
+  // Recursive search that counts valid secrets on the fly without storing them
+  const search = (prefix: string, used: Set<string>): void => {
+    if (prefix.length === length) {
+      const isConsistent = moves.every((move) => {
+        const result = evaluateGuess(prefix, move.guess);
+        return result.bulls === move.bulls && result.cows === move.cows;
+      });
+      if (isConsistent) count++;
+      return;
+    }
+
+    for (const digit of pool) {
+      if (!used.has(digit)) {
+        used.add(digit);
+        search(prefix + digit, used);
+        used.delete(digit); // backtrack
+      }
+    }
+  };
+
+  search("", new Set());
+  memoCache.set(key, count);
+  return count;
 };
