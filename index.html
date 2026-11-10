@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bulls and Cows</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>🐂 Bulls and Cows! 🐄</h1>
+
+      <!-- Settings -->
+      <section id="settings-screen">
+        <label>
+          Notation:
+          <select id="base-select">
+            <option value="bin">Binary (bin)</option>
+            <option value="oct">Octal (oct)</option>
+            <option value="dec" selected>Decimal (dec)</option>
+            <option value="hex">Hexadecimal (hex)</option>
+          </select>
+        </label>
+
+        <label>
+          Length of the secret number:
+          <select id="length-select"></select>
+        </label>
+
+        <div id="combinations-info" class="info-box">
+          Unique combinations: <span id="combinations-count">0</span>
+        </div>
+
+        <button id="start-btn" class="primary-btn">Start round</button>
+        <button
+          id="view-records-btn"
+          class="secondary-btn"
+          style="margin-bottom: 10px"
+        >
+          View Records
+        </button>
+      </section>
+
+      <!-- playing screen -->
+      <section id="game-screen" hidden>
+        <div class="stats">
+          <span class="game-info">Dec / Length: 4</span>
+          <span>Attempts: <span id="attempts-count">0</span></span>
+          <span>Possible secrets: <span id="possible-count">-</span></span>
+          <span>Time: <span id="timer">00:00</span></span>
+        </div>
+
+        <div class="input-row">
+          <input
+            type="text"
+            id="guess-input"
+            placeholder="Enter your guess"
+            autocomplete="off"
+          />
+          <button id="submit-guess-btn" class="primary-btn">Guess</button>
+        </div>
+
+        <div id="history-list" class="history"></div>
+
+        <button id="new-game-btn" class="secondary-btn">New game</button>
+      </section>
+
+      <section id="records-screen" hidden>
+        <h2>🏆 Records</h2>
+        <table id="records-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Attempts</th>
+              <th>Time</th>
+              <th>Settings</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button id="back-to-settings-btn" class="secondary-btn">
+          Back to settings
+        </button>
+      </section>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
